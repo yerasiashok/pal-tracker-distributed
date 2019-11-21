@@ -15,7 +15,7 @@ jobs:
     - stage: build and publish
       name: allocations
       language: java
-      jdk: openjdk11
+      jdk: openjdk8
       addons:
         mariadb: '10.2'
       install: skip
@@ -26,6 +26,7 @@ jobs:
         - APPLICATION=allocations
         - ./gradlew clean :applications:${APPLICATION}-server:build
       before_deploy:
+        - export RELEASE_TAG="release-$TRAVIS_BUILD_NUMBER"
         - git config --local user.name "Travis CI"
         - git config --local user.email "travis@example.com"
         - git tag -f $RELEASE_TAG
@@ -50,6 +51,7 @@ jobs:
         - APPLICATION=backlog
         - ./gradlew clean :applications:${APPLICATION}-server:build
       before_deploy:
+        - export RELEASE_TAG="release-$TRAVIS_BUILD_NUMBER"
         - git config --local user.name "Travis CI"
         - git config --local user.email "travis@example.com"
         - git tag -f $RELEASE_TAG
@@ -70,6 +72,7 @@ jobs:
         - APPLICATION=registration
         - ./gradlew clean :applications:${APPLICATION}-server:build
       before_deploy:
+        - export RELEASE_TAG="release-$TRAVIS_BUILD_NUMBER"
         - git config --local user.name "Travis CI"
         - git config --local user.email "travis@example.com"
         - git tag -f $RELEASE_TAG
@@ -90,6 +93,7 @@ jobs:
         - APPLICATION=timesheets
         - ./gradlew clean :applications:${APPLICATION}-server:build
       before_deploy:
+        - export RELEASE_TAG="release-$TRAVIS_BUILD_NUMBER"
         - git config --local user.name "Travis CI"
         - git config --local user.email "travis@example.com"
         - git tag -f $RELEASE_TAG
@@ -103,6 +107,7 @@ jobs:
         - echo "Downloading allocations server $RELEASE_TAG"
         - wget -P applications/allocations-server/build/libs https://github.com/$GITHUB_USERNAME/pal-tracker-distributed/releases/download/$RELEASE_TAG/allocations-server.jar
       before_deploy:
+        - export RELEASE_TAG="release-$TRAVIS_BUILD_NUMBER"
         - cp manifest-allocations.yml manifest.yml
         - echo "Deploying allocations server $RELEASE_TAG"
       deploy: &cloudfoundry
@@ -119,6 +124,7 @@ jobs:
         - echo "Downloading backlog server $RELEASE_TAG"
         - wget -P applications/backlog-server/build/libs https://github.com/$GITHUB_USERNAME/pal-tracker-distributed/releases/download/$RELEASE_TAG/backlog-server.jar
       before_deploy:
+        - export RELEASE_TAG="release-$TRAVIS_BUILD_NUMBER"
         - cp manifest-backlog.yml manifest.yml
         - echo "Deploying backlog server $RELEASE_TAG"
       deploy:
@@ -130,6 +136,7 @@ jobs:
         - echo "Downloading registration server $RELEASE_TAG"
         - wget -P applications/registration-server/build/libs https://github.com/$GITHUB_USERNAME/pal-tracker-distributed/releases/download/$RELEASE_TAG/registration-server.jar
       before_deploy:
+        - export RELEASE_TAG="release-$TRAVIS_BUILD_NUMBER"
         - cp manifest-registration.yml manifest.yml
         - echo "Deploying registration server $RELEASE_TAG"
       deploy:
@@ -141,6 +148,7 @@ jobs:
         - echo "Downloading timesheets server $RELEASE_TAG"
         - wget -P applications/timesheets-server/build/libs https://github.com/$GITHUB_USERNAME/pal-tracker-distributed/releases/download/$RELEASE_TAG/timesheets-server.jar
       before_deploy:
+        - export RELEASE_TAG="release-$TRAVIS_BUILD_NUMBER"
         - cp manifest-timesheets.yml manifest.yml
         - echo "Deploying timesheets server $RELEASE_TAG"
       deploy:
