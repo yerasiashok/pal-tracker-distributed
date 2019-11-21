@@ -9,3 +9,4 @@ applications:
     REGISTRATION_SERVER_ENDPOINT: http://registration-pal-ashokamit.apps.evans.pal.pivotal.io
   services:
   - tracker-timesheets-database
+  - tracker-service-registry
